@@ -111,7 +111,7 @@ class App {
             }
         });
 
-        // 해시태그
+        // 검색
         $(".help-search > .btn-search").on("click", e => search(e));
         $(".help-search > input").on("keydown", e => {
             e.keyCode == 13 && search(e);
@@ -135,8 +135,7 @@ class App {
                 $(".help-message").text(`${this.findList.length}개 중 ${this.index + 1}번째`);
                 
                 let target = this.focusItem.parentElement.dataset.target;
-                $("input[name='tabs']").removeAttr("checked");
-                $(target).attr("checked", true);
+                $(target)[0].checked = true;
             } else {
                 this.index = null;
                 $(".help-message").text("일치하는 내용이 없습니다.");
@@ -144,6 +143,7 @@ class App {
         };
 
         $(".help-search > .btn-prev").on("click", e => {
+            if(this.findList.length === 0) return;
             this.focusItem.classList.remove("active");
             this.index = this.index - 1 < 0 ? this.findList.length - 1 : this.index - 1;
             this.focusItem.classList.add("active");
@@ -151,11 +151,11 @@ class App {
             $(".help-message").text(`${this.findList.length}개 중 ${this.index + 1}번째`);
             
             let target = this.focusItem.parentElement.dataset.target;
-            $("input[name='tabs']").removeAttr("checked");
-            $(target).attr("checked", true);
+            $(target)[0].checked = true;
         });
 
         $(".help-search > .btn-next").on("click", e => {
+            if(this.findList.length === 0) return;
             this.focusItem.classList.remove("active");
             this.index = this.index + 1 >= this.findList.length ? 0 : this.index + 1;
             this.focusItem.classList.add("active");
@@ -164,7 +164,7 @@ class App {
             
             let target = this.focusItem.parentElement.dataset.target;
             $("input[name='tabs']").removeAttr("checked");
-            $(target).attr("checked", true);
+            $(target)[0].checked = true;
         });
     }
 }
